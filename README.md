@@ -4,15 +4,18 @@ Compute Kurucz ATLAS9 model atmospheres using Luca Sbordone's version of ATLAS9
 This repository includes the ATLAS9 code by Kurucz, adapted by Luca Sbordone (see Sbordone, Bonifacio & Castelli 2006), with minor modifications to compile with ifort version 2001.9.0 (part of the Intel oneAPI), and a couple of Perl scripts that facilitate creating new models.
 
 1. Install
+
 First download/clone the complete repo. The ATLAS9 sourcde code is in the src folder. The ODF folder contains pre-caclulated Opacity Distribution Functions. There is a documentation folder, and others with scripts and utilities. The wrapper for ATLAS9 (mkk) and an auxiliary code (kget) are in the perl folder. 
 
 The ATLAS9 executables are in the bin folder. These have been compiled for a 64-bit Intel processor. If using a different architecture you will need to recompile ATLAS9 with ifort, which is now free as part of oneAPI. To recompile just enter the src folder and run 'make'. Here's an example on how to install ifort in ubuntu
 https://gist.github.com/SomajitDey/aeb6eb4c8083185e06800e1ece4be1bd
 
-You will need to copy mkk and kget from the perl folder to your home directory (~/perl) and make them executable. Set an environmental variable KURUCZ to the path where you downloaded the repository. For example if you downloaded the repo to ~/kurucz then include in your .bashrc:
-export KURUCZ=~/kurucz
+You will need to copy mkk and kget from the perl folder to your home directory (e.g. /home/callende/perl), or anywhere you want in your path, and make them executable. Make sure this folder is in your path. Set an environmental variable KURUCZ to the path where you downloaded the repository. For example, using bash, if you downloaded the repo to /work/<yourusername>/kurucz and copied mkk and kget to your home then include in your .bashrc:
+export KURUCZ=/work/<yourusername>/kurucz
+export PATH=$PATH:/home/<yourusername>/perl
 
 2. Test
+ 
 Try building a solar model by running
 mkk 5777. 4.437
 and you should get something like this
