@@ -11,8 +11,10 @@ The ATLAS9 executables are in the bin folder. These have been compiled for a 64-
 https://gist.github.com/SomajitDey/aeb6eb4c8083185e06800e1ece4be1bd
 
 You will need to copy mkk and kget from the perl folder to your home directory (e.g. /home/callende/perl), or anywhere you want in your path, and make them executable. Make sure this folder is in your path. Set an environmental variable KURUCZ to the path where you downloaded the repository. For example, using bash, if you downloaded the repo to /work/<yourusername>/kurucz and copied mkk and kget to your home then include in your .bashrc:
+ 
 export KURUCZ=/work/<yourusername>/kurucz
-export PATH=$PATH:/home/<yourusername>/perl
+
+ export PATH=$PATH:/home/<yourusername>/perl
 
 2. Test
  
