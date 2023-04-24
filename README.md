@@ -98,9 +98,9 @@ Running Atlas9 -- block 1 -- 15 iterations ...
 
 and three files:
  
- k5777._4.437.13  -> the model SED)
+ k5777._4.437.13  -> the model SED
 
- k5777._4.437.7   -> the model atmosphere)
+ k5777._4.437.7   -> the model atmosphere
 
  k5777._4.437.5   -> the input file for ATLAS9
  
