@@ -1,0 +1,57 @@
+#!/usr//bin/perl
+#
+# NAME: 	kget
+# USAGE:	kget file_with_many_kurucz_models teff logg [M/H] > output.mod
+# PURPOSE:	extracts a model from a file with many Kurucz model 
+#		atmospheres into individual files, each one with a 
+#		single model. The last parameter (metallicity [M/H])
+#		is optional. If not given, then only the model for the 
+#		first found metallicity  will be extracted.
+#
+# AUTHOR:	C. Allende Prieto, England, May 2008
+#
+
+#pick up the input filename from the command line
+$nparams=@ARGV;
+if ($nparams < 3){die "kget needs 3 (or 4) input parameters: filename, Teff, logg (and [Fe/H])"};
+$infile=shift(@ARGV);
+$teff0=shift(@ARGV);
+$logg0=shift(@ARGV);
+$feh0=shift(@ARGV);
+
+open(INFILE,"$infile") || die "Cannot access the input file $infile";
+
+#lets go
+$takeit=0;
+$i;
+while(<INFILE>){
+	#print "$i $line \n";
+	if(/TEFF/){		
+		$line=$_;
+		@tmp=split;
+		#print $tmp[1]," ",$tmp[3],"\n";
+		$teff=$tmp[1];
+		$logg=$tmp[3];
+		$takeit=1;
+	}
+	if(/SCALE/){
+		$line=$_;
+		@tmp=split;
+		$feh=sprintf("%5.2f",log($tmp[2])/log(10.));
+		#print "$tmp[2] $feh $feh0 \n";
+		if ($feh0==""){$feh0=$feh};
+		#print "$teff $teff0 $logg $logg0 $feh $feh0 \n";
+	}
+	if(($takeit == 1)&&(abs($teff-$teff0)<1.0)&&(abs($logg-$logg0)<0.001)&&(abs($feh-$feh0)<0.001)){
+		push(@model,$_);
+		if(/BEGIN/){
+			$takeit=0;
+			print join("",@model);
+			die;
+		}
+	}
+	$i++;
+}
+
+close(INFILE);
+

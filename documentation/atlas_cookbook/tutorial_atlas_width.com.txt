@@ -1,0 +1,5 @@
+#!/bin/csh -vf
+rm -f fort.*
+date 
+ln -s /usr/local/kurucz/lines/molecules.dat fort.2
+/usr/local/kurucz/bin/width9.exe < tutorial_atlas.wid

@@ -1,0 +1,81 @@
+#######################################################################
+ATLAS, SYNTHE AND WIDTH Linux Porting by L. Sbordone, P. Bonifacio.
+
+---- 10/6/04 (VERY) Temporary help file.
+---- 05/7/05 Updated and included in the new Atlas port webpage
+
+Please be patient, this help is evolving... For any correction, 
+contribution etc. feel free to email L. Sbordone at
+
+sbordone at mporzio dot astro dot it
+
+########################################################################
+
+In case you should use this codes for scientific publications, you are kindly requested to cite:
+Kurucz, R. L., 1993, CD-ROM 13, 18, http://kurucz.harvard.edu and
+Sbordone, L., Bonifacio, P., Castelli F., and Kurucz, R. L., 2004 astro-ph/0406268
+
+########################################################################
+
+
+INSTALLATION
+
+This version of the code is written to be compiled with Intel Fortran Compiler (IFC) 8.1, at the moment
+the latest one downloadable from www.intel.com. It should compile under IFC 8.0 likely with some 
+minor tweak to the compiler options. Minor changes to the codes are instead required for it to compile 
+under IFC 7.*. We can provide you a suitable version should you need it: simply contact us.
+IFC can be downloaded free of charge for research applications under Linux (go on www.intel.com, products 
+and services, software, compilers, fortran compiler for linux, free evaluation download, and choose 
+"noncommercial unsupported version"). Please refer to the "End User Licence Agreement" page there for details 
+about IFC licensing issues. IFC is a beautiful and powerful software, offered free of charge with a complete, 
+massive documentation: we are extremely grateful to Intel to providing it for research purposes. As it is, 
+the code comes equipped with a complete set of linelists and BIG type ODF, appropriate for model calculation . 
+It comes also with a set of template execution script, and a set of tutorials. Check the website for updates to the
+documentation, since it is evolving.
+
+The tarballs available at the moment are (I omit the.tar.bz2 extension):
+
+src -> Sources of Kurucz codes. 
+lines -> Linelists for Synthe
+lines_at12 -> Lines for Atlas 12. Beware: this one is HUGE. Unless you plan to use Atlas 12, leave it.
+odf -> Opacities for Atlas 9
+scripts -> Installation scripts, and some example scripts. 
+bin -> precompiled binaries. 
+utilities -> Useful programs of many kinds. 
+molecules -> Molecular lines for Synthe.
+doc -> (Hopefully) up-to-date documentation, including a complete offline version of the web site.
+
+The installation scheme we suggest (and the one for which all the scripts and examples are written) is the following:
+
+1) become root and create a directory /usr/local/kurucz. You will have to stay root for all the installation.
+
+2) put there the tarballs
+
+3) decompress each one of them by saying:
+
+    tar -xvjf FILENAME.tar.bz2
+    
+
+Each tarball becomes a directory with the same name. 
+
+4) If you choose (or have) to recompile the sources, you should have IFC 8.1 installed. The source files
+to be compiled are in the src/ and utilities/ directories. Firt of all, check if the Intel Compiler
+is in the right place, looking to the location of the file "ifort" (for a typical install it is 
+/opt/intel_fc_80/bin/ifort), and check if it correspondt to what is written in the line
+
+FC = . /opt/intel_fc_80/bin/ifort
+
+at the beginning of the Makefile in src/ or in utilities/. If it does not, edit the Makefile (both) accordingly.
+
+5) when this is done, simply do
+
+make all
+
+inside src/ and utilities/. Do not worry if it takes time.
+
+6) If this works (do not worry about warnings), you are done. 
+
+    
+
+
+

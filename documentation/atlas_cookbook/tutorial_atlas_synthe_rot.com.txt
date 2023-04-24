@@ -1,0 +1,101 @@
+#!/bin/tcsh
+#example SYNTHE input script, for the ATLAS cookbook. 
+rm -f fort.*
+set model = syn_ro_t4904g230p00a0vt10_l.mod
+set teff = t4904
+set glog = g230
+set met = p00
+ln -s  /usr/local/kurucz/lines/he1tables.dat fort.18
+ln -s /usr/local/kurucz/lines/molecules.dat    fort.2
+ln -s /usr/local/kurucz/lines/continua.dat  fort.17
+/usr/local/kurucz/bin/xnfpelsyn.exe < $model
+/usr/local/kurucz/bin/synbeg.exe <<EOF
+AIR         588.0     590.0    600000.     1.67    0     30    .0001     1    0
+AIRorVAC  WLBEG     WLEND     RESOLU    TURBV  IFNLTE LINOUT CUTOFF        NREAD
+EOF
+ln -s /usr/local/kurucz/lines/gf0600.100 fort.11
+/usr/local/kurucz/bin/rline2.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/h2bx.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/nhax.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/sihax.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/chbx.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/chcx.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/h2bx.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/mghbx.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/nhca.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/cnax.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/cnbx.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/c2ba.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/c2da.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/c2ea.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+ln -s /usr/local/kurucz/molecules/coax.dat fort.11
+/usr/local/kurucz/bin/rmolecasc.exe
+rm -f fort.11
+/usr/local/kurucz/bin/synthe.exe
+ln -s $model fort.5
+set  outspec = ${teff}${glog}${met}.flx
+cat <<EOF >fort.25
+0.0       0.        1.        0.        0.        0.        0.        0.
+0.
+RHOXJ     R1        R101      PH1       PC1       PSI1      PRDDOP    PRDPOW
+EOF
+/usr/local/kurucz/bin/spectrv.exe 
+mv fort.7 ${outspec}
+ln -s $outspec fort.1
+/data/Kurutar/bin/rotate.exe<<EOF
+    1
+50.
+EOF
+mv ROT1 ${outspec}
+ln -s $outspec fort.21
+rm fort.5 fort.1
+set brspec = br_${outspec}
+ln -s $brspec fort.22
+/usr/local/kurucz/bin/broaden.exe << EOF
+GAUSSIAN        7.00KM
+EOF
+ln -s  $outspec  fort.1
+set asc = tutorial_synthe_r50_br70.asc 
+set lines = tutorial_synthe_r50_br70.dat
+set lines_nob = tutorial_synthe_r50_nb.dat
+set asc_nob = tutorial_synthe_r50_nb.asc
+rm -f fort.2
+ln -s $lines_nob fort.3 
+ln -s $asc_nob fort.2 
+ln -s  dmp.dmp fort.4
+/usr/local/kurucz/bin/syntoascanga.exe
+rm -f fort.2
+rm -f fort.1
+rm -f fort.3
+ln -s $brspec  fort.1
+ln -s $asc fort.2
+ln -s $lines fort.3
+/usr/local/kurucz/bin/syntoascanga.exe
+rm -f fort.*

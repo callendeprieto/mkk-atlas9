@@ -1,0 +1,79 @@
+#!/bin/tcsh
+#Some aliasing...
+alias summa 'set \!:1 = `echo " \!:2 + \!:3" | bc -l`'
+alias subtra 'set \!:1 = `echo "\!:2 - \!:3" | bc -l`'
+#file needs to be TOUCHed, since the program opens it in APPEND mode
+#
+set outfile=sgr709_6001.wid
+set starname=sgr709
+mv $outfile $outfile.old
+set model=t4930g250p00a0vt20_l.mod
+touch $outfile
+rm -f fort*
+#
+#initial cards
+echo "VTUR" > $outfile
+echo "    1 1.50 1.50 1.70" >> $outfile
+foreach inatom ( 60.01)
+echo "---- Now working on" $inatom
+set atomnome = `echo $inatom | sed -e 's/\.//'`
+set infile = ${starname}_${atomnome}.in
+echo $infile
+set sum=0
+echo "AVER" >> $outfile
+ln -s /usr/local/kurucz/lines_mie/gf0500.100 fort.11
+ln -s $infile fort.01
+ln -s $outfile  fort.07
+$HOME/bin/prep_width_mod.exe << EOF
+$inatom
+EOF
+set nli = `cat fort.66 | grep -e written | sed -e 's/lines written //'`
+summa sum $sum $nli
+rm -f fort*
+ln -s /usr/local/kurucz/lines_mie/gf0600.100 fort.11
+ln -s $infile fort.01
+ln -s $outfile  fort.07
+$HOME/bin/prep_width_mod.exe << EOF
+$inatom
+EOF
+set nli = `cat fort.66 | grep -e written | sed -e 's/lines written //'`
+summa sum $sum $nli
+rm -f fort*
+ln -s /usr/local/kurucz/lines_mie/gf0800.100 fort.11
+ln -s $infile fort.01
+ln -s $outfile  fort.07
+$HOME/bin/prep_width_mod.exe << EOF
+$inatom
+EOF
+#cat fort.66
+echo "Ended for "$inatom
+set nli = `cat fort.66 | grep -e written | sed -e 's/ lines written //'`
+set inlin = `cat fort.66 | grep -e total | sed -e 's/ of total //'`
+summa sum $sum $nli
+subtra test $sum $inlin
+if ($test == 0) then
+	echo "Fine for "$inatom
+else
+	echo "WARNING! TROUBLES WITH LINE MATCHING FOR "$inatom
+endif
+rm -f fort*
+echo "AVER" >>$outfile
+end
+# ssssssssssssssssssssssssssssssssssssssssssssssssssss
+##
+##
+#### Model insertion and final editing
+echo "END" >> $outfile
+cat $model >>$outfile
+mv $outfile dumpfile
+cat dumpfile | sed -e 's/BEGIN                    ITERATION  15 COMPLETED//' >$outfile
+cat $outfile | sed '/^$/d' > dumpfile
+mv dumpfile $outfile
+echo "READ MOLECULES" >> $outfile
+echo "MOLECULES ON" >> $outfile
+echo "BEGIN                    ITERATION  15 COMPLETED" >> $outfile
+echo "END" >> $outfile
+echo "STOP" >> $outfile
+
+
+

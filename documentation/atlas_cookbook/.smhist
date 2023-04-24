@@ -1,0 +1,5 @@
+macro read wsint.sm
+wsint tutorial_synthe_r50_nb
+ovsint tutorial_synthe_nb.asc blue
+ovsint tutorial_synthe_nb blue
+quit
