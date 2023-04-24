@@ -14,13 +14,15 @@ You will need to copy mkk and kget from the perl folder to your home directory (
  
 export KURUCZ=/work/<yourusername>/kurucz
 
- export PATH=$PATH:/home/<yourusername>/perl
+export PATH=$PATH:/home/<yourusername>/perl
 
 2. Test
  
 Try building a solar model by running
+ 
 mkk 5777. 4.437
-and you should get something like this
+
+ and you should get something like this
 
 Best match for kap file is /work/callende/kurucz/ODF/NEW//kapp00.ros with a distance 0
  
