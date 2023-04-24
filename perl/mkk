@@ -24,7 +24,7 @@ $odf_dir="$kurucz_dir/ODF/NEW/";			# ODF, Rosseland kappa
 							# and molecular data dir
 $molecules="$odf_dir/molecules.dat";				# molecular data 
 							# (expected in $odf_dir)
-$start_model_dir=$ENV{HOME}."/idl/idl_database/kurucz_models/";   # files 
+$start_model_dir=$kurucz_dir."/models/";   # files 
 							# from which the initial 
 							# model is extracted 
 $start_model_suf="k2odfnew.dat";			# suffix for initial 
@@ -242,7 +242,7 @@ print "Best match for the starting model is $start_model_pars with a distance $d
 
 
 #extract starting model
-system("~/perl/kget $mod $start_model_pars > fort.3");
+system($kurucz_dir."/perl/kget $mod $start_model_pars > fort.3");
 
 #read Kurucz solar abundances from starting model
 open(MOD,"fort.3") or die "Cannot open fort.3\n";
