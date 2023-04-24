@@ -10,9 +10,9 @@ First download/clone the complete repo. The ATLAS9 sourcde code is in the src fo
 The ATLAS9 executables are in the bin folder. These have been compiled for a 64-bit Intel processor. If using a different architecture you will need to recompile ATLAS9 with ifort, which is now free as part of oneAPI. To recompile just enter the src folder and run 'make'. Here's an example on how to install ifort in ubuntu
 https://gist.github.com/SomajitDey/aeb6eb4c8083185e06800e1ece4be1bd
 
-You will need to get the Perl code 'mkk' in your path, and make sure it is executable. Set an environmental variable KURUCZ to the path where you downloaded the repository. For example, using bash, if you downloaded the repo to /work/<yourusername>/mkk-atlas9 include in your .bashrc:
+You will need to get the Perl code 'mkk' in your path, and make sure it is executable. Set an environmental variable KURUCZ to the path where you downloaded the repository. For example, using bash, if you downloaded the repo to /work/username/mkk-atlas9 include in your .bashrc:
  
-export KURUCZ=/work/<yourusername>/mkk-atlas9
+export KURUCZ=/work/username/mkk-atlas9
 
 export PATH=$PATH:$KURUCZ/perl
 
