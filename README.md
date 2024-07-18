@@ -3,6 +3,8 @@ Compute Kurucz ATLAS9 model atmospheres using Luca Sbordone's version of ATLAS9
 
 This repository includes the ATLAS9 code by Kurucz, adapted by Luca Sbordone (see Sbordone, Bonifacio & Castelli 2006), with minor modifications to compile with ifort version 2001.9.0 (part of the Intel oneAPI), and a couple of Perl scripts that facilitate creating new models.
 
+The latest update, on July 2024, enables the calculation of model atmospheres with [Fe/H]<-5, something not possible before due to the format of the ABUNDANCE SCALE 'XSCALE' parameter. The new version of ATLAS9 is atlas9mem_zero.
+
 1. Install
 
 First download/clone the complete repo. The ATLAS9 sourcde code is in the src folder. The ODF folder contains pre-caclulated Opacity Distribution Functions. There is a documentation folder, and others with scripts and utilities. The wrapper for ATLAS9 (mkk) and an auxiliary code (kget) are in the perl folder. 
