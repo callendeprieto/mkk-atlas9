@@ -18,7 +18,7 @@ use File::stat;
 #0
 #basic params #################################################################
 $kurucz_dir=$ENV{KURUCZ};			# atlas dir
-$kurucz_bin="$kurucz_dir/bin/atlas9mem_newodf.exe";	# atlas bin
+$kurucz_bin="$kurucz_dir/bin/atlas9mem_zero.exe";	# atlas bin
 $odf_dir="$kurucz_dir/ODF/NEW/";			# ODF, Rosseland kappa 
 #$odf_dir="$kurucz_dir/odf/";
 							# and molecular data dir
@@ -310,7 +310,7 @@ print  INPUT    "FREQUENCIES 337 1 337 BIG\n";
 printf INPUT   "VTURB %6.1e\n",$micro*1e5;
 print  INPUT    "CONVECTION OVER 1.25 0\n";
 print  INPUT    "TITLE test\n";
-printf INPUT   "ABUNDANCE SCALE %9.5f ",10.**$feh;
+printf INPUT   "ABUNDANCE SCALE %10.3E ",10.**$feh;
 printf INPUT   "ABUNDANCE CHANGE 1 %7.5f 2 %7.5f",$solar[0]*10.**($abu_changes{$elements[0]}),$solar[1]*10.**($abu_changes{$elements[1]});
 $nn=7;
 for ($i=2; $i<=$nelements-1; $i++){

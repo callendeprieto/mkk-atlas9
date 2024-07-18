@@ -5,7 +5,11 @@ FFLAGS = -c -save -1 -tpp7 -w -V -WB
 LDFLAGS = -Vaxlib -static -zero
 SIMPLE_FLAGS = -w95 -save -V -tpp7 -static -zero
 
-all: atlas9 atlas9old atlas12 synthe width molec odf install
+all: atlas9 atlas9old atlas12 synthe width molec odf zero install
+
+zero: atlas9mem_zero.for
+	$(FC) $(FFLAGS) -o atlas9mem_zero.o atlas9mem_zero.for
+	$(FC) $(LDFLAGS) -o atlas9mem_zero.exe   atlas9mem_zero.o
 
 atlas9:	atlas9mem_newodf.for
 	$(FC) $(FFLAGS) -o atlas9mem_newodf.o atlas9mem_newodf.for
