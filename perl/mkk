@@ -307,7 +307,7 @@ print  INPUT    "READ PUNCH               \n";
 print  INPUT    "MOLECULES ON             \n";
 print  INPUT    "READ MOLECULES\n";
 print  INPUT    "FREQUENCIES 337 1 337 BIG\n";
-printf INPUT   "VTURB %6.1e\n",$micro*1e5;
+printf INPUT   "VTURB %6.1E\n",$micro*1e5;
 print  INPUT    "CONVECTION OVER 1.25 0\n";
 print  INPUT    "TITLE test\n";
 printf INPUT   "ABUNDANCE SCALE %10.3E ",10.**$feh;
